@@ -1,0 +1,97 @@
+name: mac-clip-history-pipeline
+on:
+  pull_request:
+  push:
+    tags: ["v*"]   # only full semver tags trigger notarise/deploy
+
+jobs:
+  preflight:
+    if: github.event_name == 'pull_request'
+    runs-on: macos-13   # free Intel runner; fast & cheap
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cache DerivedData
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData
+          key: ${{ runner.os }}-xcode-${{ hashFiles('**/*.swift') }}
+      - name: Lint & format
+        run: |
+          brew install swiftlint swiftformat
+          swiftformat --dryrun --swiftversion 5 .
+          swiftlint
+      - name: Unit tests
+        run: |
+          xcodebuild \
+            -scheme ClipHistory \
+            -destination 'platform=macOS' \
+            -configuration Debug \
+            test
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: macos-14      # Apple silicon runner for production build
+    env:
+      CERT_P12: ${{ secrets.DEV_ID_CERT_P12 }}
+      CERT_PASSWORD: ${{ secrets.P12_PASSWORD }}
+      ASC_API_KEY: ${{ secrets.ASC_API_KEY }}
+      ASC_API_ISSUER: ${{ secrets.ASC_API_ISSUER }}
+      TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # 1. Import certificate
+      - name: Install signing certificate
+        run: |
+          echo "$CERT_P12" | base64 --decode > cert.p12
+          security create-keychain -p "" build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p "" build.keychain
+          security import cert.p12 -k build.keychain -P "$CERT_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain
+
+      # 2. Build Release
+      - name: Build archive
+        run: |
+          xcodebuild \
+            -scheme ClipHistory \
+            -configuration Release \
+            -archivePath build/ClipHistory.xcarchive \
+            archive
+
+      # 3. Export .app and create DMG
+      - name: Package DMG
+        run: |
+          brew install create-dmg
+          xcodebuild -exportArchive \
+            -archivePath build/ClipHistory.xcarchive \
+            -exportOptionsPlist ExportOptions.plist \
+            -exportPath build/out
+          create-dmg \
+            --identity "Developer ID Application: $TEAM_ID" \
+            --overwrite \
+            build/out/ClipHistory.app
+          mv *.dmg ClipHistory-${{ github.ref_name }}.dmg
+
+      # 4. Notarise & staple
+      - name: Notarise
+        run: |
+          xcrun notarytool submit ClipHistory-${{ github.ref_name }}.dmg \
+            --key $ASC_API_KEY --issuer $ASC_API_ISSUER \
+            --team-id $TEAM_ID --wait
+          xcrun stapler staple ClipHistory-${{ github.ref_name }}.dmg
+
+      # 5. Attach to GitHub Release
+      - name: Upload artefact
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ClipHistory-${{ github.ref_name }}.dmg
+
+      # 6. (Optional) Push to Gumroad
+      - name: Update Gumroad file
+        if: env.GUMROAD_ACCESS_TOKEN != ''
+        run: |
+          curl -X PUT \
+            -H "Authorization: Bearer $GUMROAD_ACCESS_TOKEN" \
+            -F "file=@ClipHistory-${{ github.ref_name }}.dmg" \
+            https://api.gumroad.com/v2/products/$GUMROAD_PRODUCT_ID/files

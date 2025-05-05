@@ -1,0 +1,25 @@
+default_platform(:mac)
+
+platform :mac do
+  private_lane :build_release do
+    build_app(
+      scheme: "ClipHistory",
+      export_method: "developer-id",
+      export_options: {
+        "signingCertificate" => "Developer ID Application",
+        "runtime" => true
+      }
+    )
+  end
+
+  lane :notarise do
+    build_release
+    notarize(
+      package: "ClipHistory.dmg",
+      api_key_path: ENV["ASC_API_KEY"],
+      api_key_id: "ABC123XYZ",
+      team_id: ENV["TEAM_ID"],
+      stapler: true
+    )
+  end
+end

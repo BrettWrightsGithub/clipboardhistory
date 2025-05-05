@@ -23,6 +23,8 @@ Provide a lightweight, persistent clipboard history for macOS so users can recal
 - Persistent storage (SQLite via Core Data)
 - Menu bar icon with dropdown history list
 - Keyboard shortcut to open history window
+- Global hotkey (Option+V) to summon history from any app
+- Auto-paste selected entry into frontmost application
 - Search and filter by keyword
 - Pin/unpin favorite entries
 - Clear individual entries or entire history
@@ -61,15 +63,16 @@ Provide a lightweight, persistent clipboard history for macOS so users can recal
 
 ## 6. Milestones & Timeline
 
-| Milestone                  | Description                                      | Duration |
-|----------------------------|--------------------------------------------------|----------|
-| M1: Dev Environment Setup  | Install Xcode, initialize Git repo, Hello World  | 1 day    |
-| M2: Clipboard Monitoring   | Implement pasteboard polling & logging           | 2 days   |
-| M3: Persistence Layer      | Setup Core Data model & CRUD operations          | 2 days   |
-| M4: History UI            | Menu bar icon & history list view                | 3 days   |
-| M5: Search & Pinning       | Add search bar and pin/unpin functionality        | 2 days   |
-| M6: Preferences Panel      | Build settings for retention & item limits       | 2 days   |
-| M7: Packaging & Release    | Notarization, DMG creation, final QA             | 2 days   |
+| Milestone                  | Description                                                      | Duration |
+|----------------------------|------------------------------------------------------------------|----------|
+| M1: Dev Environment Setup  | Install Xcode, initialize Git repo, Hello World                  | 1 day    |
+| M2: Clipboard Monitoring   | Implement pasteboard polling & logging                           | 2 days   |
+| M3: Persistence Layer      | Setup Core Data model & CRUD operations                          | 2 days   |
+| M4: History UI             | Menu bar icon & history list view                                | 3 days   |
+| M5: Global Hotkey & Paste  | Integrate system-wide shortcut (Option+V) and auto-paste action  | 2 days   |
+| M6: Search & Pinning       | Add search bar and pin/unpin functionality                        | 2 days   |
+| M7: Preferences Panel      | Build settings for retention & item limits                       | 2 days   |
+| M8: Packaging & Release    | Notarization, DMG creation, final QA                             | 2 days   |
 
 ## 7. Risks & Mitigations
 - **Clipboard API changes**: use public NSPasteboard API only
