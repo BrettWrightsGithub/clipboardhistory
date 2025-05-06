@@ -1,0 +1,23 @@
+{
+  "": {
+    "swift-dependencies": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryTests.build/master.swiftdeps"
+  },
+  "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/Tests/ClipboardHistoryTests/ClipboardHistoryTests.swift": {
+    "dependencies": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryTests.build/ClipboardHistoryTests.d",
+    "object": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryTests.build/ClipboardHistoryTests.swift.o",
+    "swiftmodule": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryTests.build/ClipboardHistoryTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryTests.build/ClipboardHistoryTests.swiftdeps"
+  },
+  "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/Tests/ClipboardHistoryTests/LaunchAtLoginManagerTests.swift": {
+    "dependencies": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryTests.build/LaunchAtLoginManagerTests.d",
+    "object": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryTests.build/LaunchAtLoginManagerTests.swift.o",
+    "swiftmodule": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryTests.build/LaunchAtLoginManagerTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryTests.build/LaunchAtLoginManagerTests.swiftdeps"
+  },
+  "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/Tests/ClipboardHistoryTests/PersistenceControllerTests.swift": {
+    "dependencies": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryTests.build/PersistenceControllerTests.d",
+    "object": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryTests.build/PersistenceControllerTests.swift.o",
+    "swiftmodule": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryTests.build/PersistenceControllerTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryTests.build/PersistenceControllerTests.swiftdeps"
+  }
+}
