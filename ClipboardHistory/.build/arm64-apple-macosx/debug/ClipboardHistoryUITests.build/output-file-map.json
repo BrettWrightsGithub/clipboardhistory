@@ -1,0 +1,17 @@
+{
+  "": {
+    "swift-dependencies": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryUITests.build/master.swiftdeps"
+  },
+  "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/Tests/ClipboardHistoryUITests/ClipboardHistoryUITests.swift": {
+    "dependencies": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryUITests.build/ClipboardHistoryUITests.d",
+    "object": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryUITests.build/ClipboardHistoryUITests.swift.o",
+    "swiftmodule": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryUITests.build/ClipboardHistoryUITests~partial.swiftmodule",
+    "swift-dependencies": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryUITests.build/ClipboardHistoryUITests.swiftdeps"
+  },
+  "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/Tests/ClipboardHistoryUITests/ClipboardHistoryUITestsLaunchTests.swift": {
+    "dependencies": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryUITests.build/ClipboardHistoryUITestsLaunchTests.d",
+    "object": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryUITests.build/ClipboardHistoryUITestsLaunchTests.swift.o",
+    "swiftmodule": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryUITests.build/ClipboardHistoryUITestsLaunchTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryUITests.build/ClipboardHistoryUITestsLaunchTests.swiftdeps"
+  }
+}
