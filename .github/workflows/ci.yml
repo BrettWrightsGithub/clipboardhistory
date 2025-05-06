@@ -19,3 +19,7 @@ jobs:
         run: swift build -C ClipboardHistoryFixed
       - name: Test
         run: swift test -C ClipboardHistoryFixed
+      - name: Build (SPM)
+        run: swift build --build-tests --package-path ClipboardHistoryFixed
+      - name: Run tests (SPM)
+        run: swift test --enable-code-coverage --package-path ClipboardHistoryFixed
