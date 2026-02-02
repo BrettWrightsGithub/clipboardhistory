@@ -1,0 +1,19 @@
+default_platform(:mac)
+
+platform :mac do
+  desc "Build the project"
+  lane :build do
+    xcodebuild(
+      scheme: "ClipboardHistory",
+      build: true
+    )
+  end
+
+  desc "Run tests"
+  lane :test do
+    xcodebuild(
+      scheme: "ClipboardHistory",
+      test: true
+    )
+  end
+end
