@@ -1,4 +1,0 @@
-module ClipboardHistoryPackageTests {
-    header "/Users/brettwright/WebApps/clipboardhistory/ClipboardHistoryFixed/.build/arm64-apple-macosx/debug/ClipboardHistoryPackageTests.build/ClipboardHistoryPackageTests-Swift.h"
-    requires objc
-}
