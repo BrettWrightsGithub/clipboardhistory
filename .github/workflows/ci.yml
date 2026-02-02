@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
