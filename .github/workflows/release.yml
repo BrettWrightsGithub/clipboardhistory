@@ -33,6 +33,9 @@ jobs:
           # Copy binary
           cp .build/release/ClipboardHistory ClipboardHistory.app/Contents/MacOS/
           
+          # Convert iconset to icns and copy to bundle
+          iconutil -c icns Assets/AppIcon.iconset -o ClipboardHistory.app/Contents/Resources/AppIcon.icns
+          
           # Create Info.plist
           cat > ClipboardHistory.app/Contents/Info.plist << 'PLIST'
           <?xml version="1.0" encoding="UTF-8"?>
@@ -72,7 +75,10 @@ jobs:
           # Install create-dmg
           brew install create-dmg
           
-          # Create DMG
+          # Verify icon exists
+          ls -la ClipboardHistory.app/Contents/Resources/
+          
+          # Create DMG with pretty installer window
           create-dmg \
             --volname "ClipboardHistory" \
             --volicon "ClipboardHistory.app/Contents/Resources/AppIcon.icns" \
@@ -82,13 +88,9 @@ jobs:
             --icon "ClipboardHistory.app" 150 185 \
             --hide-extension "ClipboardHistory.app" \
             --app-drop-link 450 185 \
+            --no-internet-enable \
             "ClipboardHistory-${GITHUB_REF_NAME}.dmg" \
-            "ClipboardHistory.app" || true
-            
-          # Fallback to hdiutil if create-dmg fails
-          if [ ! -f "ClipboardHistory-${GITHUB_REF_NAME}.dmg" ]; then
-            hdiutil create -volname "ClipboardHistory" -srcfolder ClipboardHistory.app -ov -format UDZO "ClipboardHistory-${GITHUB_REF_NAME}.dmg"
-          fi
+            "ClipboardHistory.app"
           
       - name: Create Release
         uses: softprops/action-gh-release@v1
