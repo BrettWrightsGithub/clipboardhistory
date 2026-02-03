@@ -9,7 +9,7 @@ struct PreferencesView: View {
         Form {
             Section(header: Text("General")) {
                 Toggle("Launch at Login", isOn: $launchAtLogin)
-                    .onChange(of: launchAtLogin) { _, newValue in
+                    .onChange(of: launchAtLogin) { newValue in
                         LaunchAtLoginManager.setEnabled(newValue)
                     }
             }
