@@ -1,0 +1,96 @@
+name: Build and Release DMG
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-14
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      
+      - name: Build Release
+        run: |
+          swift build -c release
+          
+      - name: Create App Bundle
+        run: |
+          # Create app bundle structure
+          mkdir -p ClipboardHistory.app/Contents/MacOS
+          mkdir -p ClipboardHistory.app/Contents/Resources
+          
+          # Copy binary
+          cp .build/release/ClipboardHistory ClipboardHistory.app/Contents/MacOS/
+          
+          # Create Info.plist
+          cat > ClipboardHistory.app/Contents/Info.plist << 'PLIST'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>CFBundleDevelopmentRegion</key>
+              <string>en</string>
+              <key>CFBundleExecutable</key>
+              <string>ClipboardHistory</string>
+              <key>CFBundleIdentifier</key>
+              <string>com.brettwright.clipboardhistory</string>
+              <key>CFBundleInfoDictionaryVersion</key>
+              <string>6.0</string>
+              <key>CFBundleName</key>
+              <string>ClipboardHistory</string>
+              <key>CFBundlePackageType</key>
+              <string>APPL</string>
+              <key>CFBundleShortVersionString</key>
+              <string>${GITHUB_REF_NAME#v}</string>
+              <key>CFBundleVersion</key>
+              <string>1</string>
+              <key>LSMinimumSystemVersion</key>
+              <string>12.0</string>
+              <key>LSUIElement</key>
+              <true/>
+              <key>NSPrincipalClass</key>
+              <string>NSApplication</string>
+              <key>NSHighResolutionCapable</key>
+              <true/>
+          </dict>
+          </plist>
+          PLIST
+          
+      - name: Create DMG
+        run: |
+          # Install create-dmg
+          brew install create-dmg
+          
+          # Create DMG
+          create-dmg \
+            --volname "ClipboardHistory" \
+            --volicon "ClipboardHistory.app/Contents/Resources/AppIcon.icns" \
+            --window-pos 200 120 \
+            --window-size 600 400 \
+            --icon-size 100 \
+            --icon "ClipboardHistory.app" 150 185 \
+            --hide-extension "ClipboardHistory.app" \
+            --app-drop-link 450 185 \
+            "ClipboardHistory-${GITHUB_REF_NAME}.dmg" \
+            "ClipboardHistory.app" || true
+            
+          # Fallback to hdiutil if create-dmg fails
+          if [ ! -f "ClipboardHistory-${GITHUB_REF_NAME}.dmg" ]; then
+            hdiutil create -volname "ClipboardHistory" -srcfolder ClipboardHistory.app -ov -format UDZO "ClipboardHistory-${GITHUB_REF_NAME}.dmg"
+          fi
+          
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ClipboardHistory-*.dmg
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
